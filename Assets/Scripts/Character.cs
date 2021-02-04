@@ -8,16 +8,24 @@ public class Character : MonoBehaviour
     public SkinnedMeshRenderer skinMesh;
     public MeshCollider colisiom;
 
-    void Start()
+    private void Start()
     {
         skinMesh = GetComponent<SkinnedMeshRenderer>();
         collisioner = new Mesh();
         colisiom = GetComponent<MeshCollider>();
     }
 
-    void Update()
+    private void Update()
     {
         skinMesh.BakeMesh(collisioner);
         colisiom.sharedMesh = collisioner;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag == "Bullet")
+        {
+            //Debug.LogError("Bullet");
+        }
     }
 }

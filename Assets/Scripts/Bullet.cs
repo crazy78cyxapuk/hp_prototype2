@@ -26,6 +26,8 @@ public class Bullet : MonoBehaviour
         if (collision.gameObject.CompareTag("Target"))
         {
             isFlew = true;
+            //CameraShake.Shake(100, 100);
+            //StartCoroutine(CameraShake1());
         }
 
         if (collision.gameObject.CompareTag("Human"))
@@ -41,4 +43,9 @@ public class Bullet : MonoBehaviour
             Debug.Log("HUMAN");
         }
     }
+
+    //IEnumerator CameraShake1()
+    //{
+    //    Camera.main.GetComponent<CameraShake>()
+    //}
 }
