@@ -18,23 +18,30 @@ public class Bullet : MonoBehaviour
             //transform.up = rb.velocity;
             transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
             transform.up = Vector3.Lerp(transform.up, target.position - transform.position, 0.5f);
+
+            if(Vector3.Distance(transform.position, target.position) < 0.1f)
+            {
+                isFlew = true;
+                Camera.main.GetComponent<CameraShake>().Shake();
+                Debug.Log(2);
+            }
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Target"))
-        {
-            isFlew = true;
-            //CameraShake.Shake(100, 100);
-            //StartCoroutine(CameraShake1());
-        }
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    if (collision.gameObject.CompareTag("Target"))
+    //    {
+    //        isFlew = true;
+    //        Camera.main.GetComponent<CameraShake>().Shake();
+    //        Debug.Log(2);
+    //    }
 
-        if (collision.gameObject.CompareTag("Human"))
-        {
-            Debug.Log("HUMAN");
-        }
-    }
+    //    if (collision.gameObject.CompareTag("Human"))
+    //    {
+    //        Debug.Log("HUMAN");
+    //    }
+    //}
 
     private void OnTriggerEnter(Collider other)
     {
