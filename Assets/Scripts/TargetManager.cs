@@ -5,7 +5,7 @@ using UnityEngine;
 public class TargetManager : MonoBehaviour
 {
     private List<Transform> allTargets = new List<Transform>();
-    private Transform lastTarget;
+    [HideInInspector] public Transform lastTarget;
     private int countTargets;
 
     [Header("Цвета для мишеней")]
@@ -14,14 +14,6 @@ public class TargetManager : MonoBehaviour
     private void Start()
     {
         GetAlltargets();
-    }
-
-    private void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            NextTarget();
-        }
     }
 
     private void GetAlltargets()
@@ -36,22 +28,7 @@ public class TargetManager : MonoBehaviour
         NextTarget();
     }
 
-    private void SwapColor()
-    {
-        int random = Random.Range(0, allTargets.Count);
-
-        allTargets[random].GetComponent<MeshRenderer>().material = material_Green;
-
-        for (int i = 0; i < allTargets.Count; i++)
-        {
-            if(i != random)
-            {
-                allTargets[i].GetComponent<MeshRenderer>().material = material_Red; ;
-            }
-        }
-    }
-
-    private void NextTarget()
+    public void NextTarget()
     {
         if (countTargets > 0)
         {
