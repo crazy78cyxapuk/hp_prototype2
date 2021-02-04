@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Character : MonoBehaviour
 {
-    [SerializeField] Mesh meshToCollide;
-
     public Mesh collisioner;
     public SkinnedMeshRenderer skinMesh;
     public MeshCollider colisiom;

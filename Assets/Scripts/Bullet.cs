@@ -4,30 +4,28 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    private float speed = 6000;
+    private float speed = 100;
 
     [HideInInspector] public Transform target;
 
-    private Rigidbody rb;
-
-    private void OnEnable()
-    {
-        rb = GetComponent<Rigidbody>();
-    }
+    private bool isFlew = false;
 
     private void Update()
     {
-        rb.velocity = (target.position - transform.position).normalized * speed * Time.deltaTime;
-        transform.up = rb.velocity;
-
-        
+        if (isFlew == false)
+        {
+            //rb.velocity = (target.position - transform.position).normalized * speed * Time.deltaTime;
+            //transform.up = rb.velocity;
+            transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
+            transform.up = Vector3.Lerp(transform.up, target.position - transform.position, 0.5f);
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Target"))
         {
-            rb.isKinematic = true;
+            isFlew = true;
         }
 
         if (collision.gameObject.CompareTag("Human"))
