@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    private float speed = 5000;
+    private float speed = 6000;
 
     [HideInInspector] public Transform target;
 
@@ -21,10 +21,11 @@ public class Bullet : MonoBehaviour
         transform.up = rb.velocity;
     }
 
-    public void LookInTarget()
+    private void OnCollisionEnter(Collision collision)
     {
-        var direction = (target.position - transform.position).normalized;
-        transform.rotation = Quaternion.LookRotation(direction);
+        if (collision.gameObject.CompareTag("Target"))
+        {
+            rb.isKinematic = true;
+        }
     }
-
 }

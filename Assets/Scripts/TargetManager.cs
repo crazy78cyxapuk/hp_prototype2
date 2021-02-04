@@ -47,6 +47,7 @@ public class TargetManager : MonoBehaviour
         }
         else
         {
+            lastTarget.GetComponent<MeshRenderer>().material = material_Red;
             Debug.Log("Прошли через все мишени!!!");
         }
     }

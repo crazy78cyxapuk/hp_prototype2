@@ -13,9 +13,17 @@ public class Shooting : MonoBehaviour
     [Header("Начальные координаты пули")]
     [SerializeField] private Transform startPositionBullet;
 
+    private GameObject lastBullet;
+    private bool isRecharge;
+
+    private void Start()
+    {
+        StartCoroutine(CreateBullet(0.1f));
+    }
+
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && isRecharge)
         {
             Shot();
         }
@@ -23,13 +31,23 @@ public class Shooting : MonoBehaviour
 
     private void Shot()
     {
+        isRecharge = false;
+
         Transform target = targetManager.lastTarget;
         targetManager.NextTarget();
 
-        GameObject newBullet = Instantiate(bullet, startPositionBullet.position, Quaternion.identity);
-        Bullet thisBullet = newBullet.AddComponent<Bullet>();
+        //GameObject newBullet = Instantiate(bullet, startPositionBullet.position, Quaternion.identity);
+        Bullet thisBullet = lastBullet.AddComponent<Bullet>();
 
         thisBullet.target = target;
-        //thisBullet.TurnTowardsTarget();
+
+        StartCoroutine(CreateBullet(0.5f));
+    }
+
+    IEnumerator CreateBullet(float timer)
+    {
+        yield return new WaitForSeconds(timer);
+        lastBullet = Instantiate(bullet, startPositionBullet.position, Quaternion.identity);
+        isRecharge = true;
     }
 }
