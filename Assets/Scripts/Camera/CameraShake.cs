@@ -5,7 +5,7 @@ using UnityEngine;
 public class CameraShake : MonoBehaviour
 {
     private Vector3 startPosition;
-    private float speedShake = 100f;
+    private float speedShake = 10f;
     private float strengthShake = 2f;
 
     private void Start()
