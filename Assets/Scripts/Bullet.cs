@@ -7,23 +7,19 @@ public class Bullet : MonoBehaviour
     private float speed = 100;
 
     [HideInInspector] public Transform target;
-
-    private bool isFlew = false;
+    [HideInInspector] public bool isInit = false;
 
     private void Update()
     {
-        if (isFlew == false)
+        if (isInit)
         {
-            //rb.velocity = (target.position - transform.position).normalized * speed * Time.deltaTime;
-            //transform.up = rb.velocity;
             transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
             transform.up = Vector3.Lerp(transform.up, target.position - transform.position, 0.5f);
 
             if(Vector3.Distance(transform.position, target.position) < 0.1f)
             {
-                isFlew = true;
+                Zeroing();
                 Camera.main.GetComponent<CameraShake>().Shake();
-                Debug.Log(2);
             }
         }
     }
@@ -51,8 +47,8 @@ public class Bullet : MonoBehaviour
         }
     }
 
-    //IEnumerator CameraShake1()
-    //{
-    //    Camera.main.GetComponent<CameraShake>()
-    //}
+    private void Zeroing()
+    {
+        isInit = false;
+    }
 }

@@ -13,8 +13,15 @@ public class Shooting : MonoBehaviour
     [Header("Начальные координаты пули")]
     [SerializeField] private Transform startPositionBullet;
 
-    private GameObject lastBullet;
-    private bool isRecharge;
+    private bool isRecharge = false;
+
+    [HideInInspector] public List<GameObject> allBullets = new List<GameObject>();
+    private ManagerPool managerPool = new ManagerPool();
+
+    private void Awake()
+    {
+        managerPool.AddPool(PoolType.Bullet);
+    }
 
     private void Start()
     {
@@ -36,10 +43,10 @@ public class Shooting : MonoBehaviour
         Transform target = targetManager.lastTarget;
         targetManager.NextTarget();
 
-        //GameObject newBullet = Instantiate(bullet, startPositionBullet.position, Quaternion.identity);
-        Bullet thisBullet = lastBullet.AddComponent<Bullet>();
+        Bullet thisBullet = allBullets[allBullets.Count - 1].GetComponent<Bullet>();
 
         thisBullet.target = target;
+        thisBullet.isInit = true;
 
         StartCoroutine(CreateBullet(0.5f));
     }
@@ -47,7 +54,7 @@ public class Shooting : MonoBehaviour
     IEnumerator CreateBullet(float timer)
     {
         yield return new WaitForSeconds(timer);
-        lastBullet = Instantiate(bullet, startPositionBullet.position, Quaternion.identity);
+        allBullets.Add(managerPool.Spawn(PoolType.Bullet, bullet, startPositionBullet.position, Quaternion.identity));
         isRecharge = true;
     }
 }
