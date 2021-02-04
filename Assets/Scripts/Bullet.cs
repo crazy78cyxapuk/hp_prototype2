@@ -19,6 +19,8 @@ public class Bullet : MonoBehaviour
     {
         rb.velocity = (target.position - transform.position).normalized * speed * Time.deltaTime;
         transform.up = rb.velocity;
+
+        
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -26,6 +28,19 @@ public class Bullet : MonoBehaviour
         if (collision.gameObject.CompareTag("Target"))
         {
             rb.isKinematic = true;
+        }
+
+        if (collision.gameObject.CompareTag("Human"))
+        {
+            Debug.Log("HUMAN");
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Human"))
+        {
+            Debug.Log("HUMAN");
         }
     }
 }
