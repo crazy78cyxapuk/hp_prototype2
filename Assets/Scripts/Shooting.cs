@@ -30,7 +30,7 @@ public class Shooting : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0) && isRecharge)
+        if (Input.GetMouseButtonDown(0))// && isRecharge)
         {
             Shot();
         }
@@ -45,8 +45,9 @@ public class Shooting : MonoBehaviour
 
         Bullet thisBullet = allBullets[allBullets.Count - 1].GetComponent<Bullet>();
 
-        thisBullet.target = target;
-        thisBullet.isInit = true;
+        thisBullet.Initialization(target);
+        //thisBullet.target = target;
+        //thisBullet.isInit = true;
 
         StartCoroutine(CreateBullet(0.5f));
     }
